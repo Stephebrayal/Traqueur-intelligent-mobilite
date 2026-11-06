@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    // Applique le plugin Google Services : lit app/google-services.json à la compilation
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -40,4 +42,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    // Importe la BoM : toutes les bibliothèques Firebase ci-dessous auront des versions compatibles
+    implementation(platform(libs.firebase.bom))
+    // Ajoute Cloud Firestore (base de données des trajets)
+    implementation(libs.firebase.firestore)
+    // Ajoute Firebase Authentication (comptes utilisateur et admin)
+    implementation(libs.firebase.auth)
 }
