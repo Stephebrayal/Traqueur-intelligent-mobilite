@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     // Applique le plugin Google Services : lit app/google-services.json à la compilation
@@ -22,10 +23,7 @@ android {
 
     buildTypes {
         release {
-            optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
-            }
+            isMinifyEnabled = false
         }
     }
     compileOptions {
