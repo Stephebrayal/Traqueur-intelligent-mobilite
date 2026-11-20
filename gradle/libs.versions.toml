@@ -1,5 +1,11 @@
+# Catalogue de versions : toutes les versions des bibliothèques et plugins du projet au même endroit.
+# Les fichiers build.gradle.kts y font référence avec "libs.xxx".
+
 [versions]
+# Version des outils de compilation Android (AGP).
+# Fixée à 9.2 car c'est la plus haute version supportée par Android Studio Quail 1 (PC de l'école).
 agp = "9.2.0"
+# Versions des bibliothèques de tests et d'interface générées avec le projet
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -7,21 +13,33 @@ appcompat = "1.6.1"
 material = "1.10.0"
 activityKtx = "1.8.0"
 constraintlayout = "2.1.4"
+# Plugin qui lit google-services.json pendant la compilation
 googleServices = "4.5.0"
+# BoM Firebase : fixe des versions compatibles entre elles pour toutes les bibliothèques Firebase
 firebaseBom = "35.1.0"
+# ÉTAPE 2 : services de localisation Google (FusedLocationProviderClient).
+# Contient aussi l'API Activity Recognition, utilisée à l'étape 3.
+playServicesLocation = "21.4.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+# La BoM Firebase (liste de versions compatibles)
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+# Cloud Firestore : base de données des trajets et points GPS (version fournie par la BoM)
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+# Firebase Authentication : comptes utilisateur et admin (version fournie par la BoM)
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
-[plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+# ÉTAPE 2 : bibliothèque de localisation de Google Play Services
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
+[plugins]
+# Plugin Android : construit une application installable
+android-application = { id = "com.android.application", version.ref = "agp" }
+# Plugin Google Services : transforme google-services.json en configuration Android
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

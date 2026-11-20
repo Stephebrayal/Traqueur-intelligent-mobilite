@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- Interface provisoire de l'écran principal (étape 2) : un texte d'état et deux boutons.
+     Elle sera remplacée par la vraie interface à l'étape 6. -->
+
+<!-- LinearLayout vertical : empile ses enfants les uns sous les autres.
+     id "main" : utilisé par MainActivity pour ajuster les marges (barres système). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
     tools:context=".MainActivity">
+    <!-- gravity="center" : centre le contenu ; padding : marge intérieure de 24dp -->
 
+    <!-- Texte qui indique si le suivi est actif ou non (modifié par MainActivity) -->
     <TextView
+        android:id="@+id/texteEtat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="24dp"
+        android:text="Suivi arrêté"
+        android:textSize="20sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Bouton qui démarre le service de suivi GPS -->
+    <Button
+        android:id="@+id/boutonDemarrer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Démarrer le suivi" />
+
+    <!-- Bouton qui arrête le service de suivi GPS -->
+    <Button
+        android:id="@+id/boutonArreter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Arrêter le suivi" />
+
+</LinearLayout>

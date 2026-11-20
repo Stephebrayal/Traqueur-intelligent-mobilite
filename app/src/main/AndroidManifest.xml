@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Manifest : carte d'identité de l'application. Il déclare ses permissions et tous ses composants
+     (activités, services...). Un composant non déclaré ici ne peut pas être lancé par Android. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- ===== Permissions nécessaires au service GPS (étape 2) ===== -->
+    <!-- Les autres permissions (localisation en arrière-plan, reconnaissance d'activité)
+         sont ajoutées par l'étape 1 (Stephe). -->
+
+    <!-- Localisation précise (GPS) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Localisation approximative (réseau) : Android 12+ exige de la demander avec la précise -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Autorise l'application à lancer un service au premier plan (Android 9+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Autorise un service au premier plan de type "location" (Android 14+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <!-- Autorise l'affichage de notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- android:name=".MobilityApp" : Android crée notre classe MobilityApp au lancement (canal de notification) -->
     <application
+        android:name=".MobilityApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,6 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobilite">
+
+        <!-- Écran principal, lancé quand on touche l'icône de l'application -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -21,6 +42,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Service de suivi GPS (étape 2).
+             exported="false" : seule notre application peut le démarrer.
+             foregroundServiceType="location" : obligatoire depuis Android 10 pour un service
+             au premier plan qui utilise la localisation. -->
+        <service
+            android:name=".service.TrackingService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>
